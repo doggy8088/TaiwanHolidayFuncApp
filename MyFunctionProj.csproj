@@ -15,4 +15,7 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+  <Target Name="RunFunctions">
+    <Exec Command="func start" />
+  </Target>
 </Project>
