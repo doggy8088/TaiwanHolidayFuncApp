@@ -27,12 +27,13 @@ namespace MyFunctionProj
             if (!File.Exists(tempFile))
             {
                 using HttpClient client = new HttpClient();
-
                 var result = await client.GetFromJsonAsync<Holiday>("https://data.taipei/api/v1/dataset/29d9771d-c0ee-40d4-8dfb-3866b0b7adaa?scope=resourceAquire&offset=958&limit=1000");
-
                 log.LogInformation($"Writing cache holiday.json to: {tempFile}");
-
                 File.WriteAllText(tempFile, result.ToJson());
+            }
+            else
+            {
+                log.LogInformation($"Load holiday.json from cache: {tempFile}");
             }
 
             var data = Holiday.FromJson(File.ReadAllText(tempFile));
