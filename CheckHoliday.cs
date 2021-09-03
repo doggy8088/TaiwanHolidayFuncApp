@@ -52,6 +52,11 @@ namespace MyFunctionProj
                     item = new ResultElement();
                 }
 
+                if (item.Name == "軍人節")
+                {
+                    item.IsHoliday = IsHoliday.否;
+                }
+
                 // 如果 item
                 return new OkObjectResult(item);
             }
