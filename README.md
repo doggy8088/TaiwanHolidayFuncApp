@@ -1,5 +1,17 @@
 # Taiwan Holiday Function App
 
+## Remark
+
+有一些特殊節日不是所有人都放假：
+
+1. 軍人節
+
+    只有軍人才放假！
+
+2. 勞動節
+
+    只有勞工才放假！
+
 ## Basic Usage
 
 - Example
@@ -16,29 +28,47 @@
 
 ## Development
 
-```sh
-git clone https://github.com/doggy8088/TaiwanHolidayFuncApp.git
-cd TaiwanHolidayFuncApp
+1. Download
 
-func start
-```
+    ```sh
+    git clone https://github.com/doggy8088/TaiwanHolidayFuncApp.git
+    cd TaiwanHolidayFuncApp
+    ```
 
-- Usage:
+2. Add `local.settings.json` file
 
-  http://localhost:7071/api/CheckHoliday?date=2021-6-14
+    ```json
+    {
+      "IsEncrypted": false,
+      "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+      }
+    }
+    ```
 
-- Result
+3. Start the function app
 
-  ```sh
-  {
-      "description": "全國各機關學校放假一日。",
-      "holidayCategory": "放假之紀念日及節日",
-      "isHoliday": 1,
-      "date": "2021/6/14",
-      "_id": 1016,
-      "name": "端午節"
-  }
-  ```
+    ```sh
+    func start
+    ```
+
+4. Usage
+
+    Open the follow link: <http://localhost:7071/api/CheckHoliday?date=2021-6-14>
+
+    Result
+
+    ```sh
+    {
+        "description": "全國各機關學校放假一日。",
+        "holidayCategory": "放假之紀念日及節日",
+        "isHoliday": 1,
+        "date": "2021/6/14",
+        "_id": 1016,
+        "name": "端午節"
+    }
+    ```
 
 ## Build
 
@@ -110,31 +140,30 @@ dotnet build -c Release
 
 - [Work with Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=linux%2Ccsharp%2Cbash&WT.mc_id=DT-MVP-4015686)
 
-  ```json
-  {
-    "IsEncrypted": false,
-    "Values": {
-      "FUNCTIONS_WORKER_RUNTIME": "<language worker>",
-      "AzureWebJobsStorage": "<connection-string>",
-      "AzureWebJobsDashboard": "<connection-string>",
-      "MyBindingConnection": "<binding-connection-string>",
-      "AzureWebJobs.HttpExample.Disabled": "true"
-    },
-    "Host": {
-      "LocalHttpPort": 7071,
-      "CORS": "*",
-      "CORSCredentials": false
-    },
-    "ConnectionStrings": {
-      "SQLConnectionString": "<sqlclient-connection-string>"
+    ```json
+    {
+      "IsEncrypted": false,
+      "Values": {
+        "FUNCTIONS_WORKER_RUNTIME": "<language worker>",
+        "AzureWebJobsStorage": "<connection-string>",
+        "AzureWebJobsDashboard": "<connection-string>",
+        "MyBindingConnection": "<binding-connection-string>",
+        "AzureWebJobs.HttpExample.Disabled": "true"
+      },
+      "Host": {
+        "LocalHttpPort": 7071,
+        "CORS": "*",
+        "CORSCredentials": false
+      },
+      "ConnectionStrings": {
+        "SQLConnectionString": "<sqlclient-connection-string>"
+      }
     }
-  }
-  ```
+    ```
 
 - [Register Azure Functions binding extensions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=DT-MVP-4015686)
 
 - [Connectors for Azure Logic Apps](https://docs.microsoft.com/en-us/azure/connectors/apis-list)
-
 
 ## Azure Logic App
 
@@ -152,9 +181,9 @@ dotnet build -c Release
 
 - 取得本地時間今天日期的 expression 語法
 
-  ```js
-  convertFromUtc(utcNow('yyyy-MM-ddTHH:mm:ssK'), 'Taipei Standard Time', 'yyyy-MM-dd')
-  ```
+    ```js
+    convertFromUtc(utcNow('yyyy-MM-ddTHH:mm:ssK'), 'Taipei Standard Time', 'yyyy-MM-dd')
+    ```
 
 - 呼叫外部 HTTP 服務
 
@@ -175,15 +204,15 @@ dotnet build -c Release
 
 - 取得 HTTP action 的回應 HTTP Status Code 內容
 
-  ```js
-  outputs('HTTP')['statusCode']
-  ```
+    ```js
+    outputs('HTTP')['statusCode']
+    ```
 
 - 取得 HTTP action 的回應 JSON 內容
 
-  ```js
-  body('HTTP')['isHoliday']
-  ```
+    ```js
+    body('HTTP')['isHoliday']
+    ```
 
   > 回傳的 body 部分預設就是 JSON 反序列化之後的物件
 
